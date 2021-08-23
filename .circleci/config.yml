@@ -1,0 +1,19 @@
+version: '2.1'
+orbs:
+  node: circleci/node@4.7.0
+  cypress: cypress-io/cypress@1.29.0
+jobs:
+  test:
+    executor:
+      name: cypress/default
+    steps:
+      - checkout
+      - node/install-packages
+      - run:
+          command: npm run build
+      - run:
+          command: npm run test
+workflows:
+  build-and-test:
+    jobs:
+      - test
