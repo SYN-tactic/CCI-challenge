@@ -13,7 +13,28 @@ jobs:
           command: npm run build
       - run:
           command: npm run test
+  deploy:
+    executor:
+      name: node/default
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "d9:a3:01:f6:46:2c:42:6d:fe:1e:5f:95:6d:50:3d:a1"
+      - run:
+          command: ssh-keyscan $T3_HOST >> ~/.ssh/known_hosts
+      - checkout
+      - node/install-packages
+      - run:
+          command: npm run build
+      - run:
+          command: npm run build:static
+      - run:
+          command: scp -r ./out $T3_USER@$T3_HOST:$CCI_PATH
 workflows:
-  build-and-test:
+  test-and-deploy:
     jobs:
       - test
+      - deploy:
+          requires:
+            - test
+      
