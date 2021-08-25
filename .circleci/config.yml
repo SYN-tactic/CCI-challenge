@@ -23,8 +23,8 @@ jobs:
       - run:
           command: ssh-keyscan $T3_HOST >> ~/.ssh/known_hosts
       - checkout
-      - node/install-packages:
-          override-ci-command: npm install
+      - run:
+          command: npm install
       - run:
           command: npm run build
       - run:
