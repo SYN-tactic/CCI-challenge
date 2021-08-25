@@ -23,13 +23,16 @@ jobs:
       - checkout
       - node/install-packages
       - run:
+          command: npm run build
+      - run:
           command: npm run build:static
       - run:
           command: scp -r ./out $T3_USER@$T3_HOST:$CCI_PATH
 workflows:
-  test:
+  test-and-deploy:
     jobs:
       - test
-  build-and-deploy:
-    jobs:
-      - deploy
+      - deploy:
+          requires:
+            - test
+      
