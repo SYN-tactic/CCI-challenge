@@ -30,7 +30,7 @@ jobs:
       - run:
           command: npm run build:static
       - run:
-          command: ssh $T3_USER@T3_HOST "rm -R ~/circleci"
+          command: ssh $T3_USER@$T3_HOST "rm -R ~/circleci"
       - run:
           command: scp -r ./out $T3_USER@$T3_HOST:$CCI_PATH
 workflows:
