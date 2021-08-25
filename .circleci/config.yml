@@ -20,6 +20,8 @@ jobs:
       - add_ssh_keys:
           fingerprints:
             - "d9:a3:01:f6:46:2c:42:6d:fe:1e:5f:95:6d:50:3d:a1"
+      - run:
+          command: ssh-keyscan $T3_HOST >> ~/.ssh/known_hosts
       - checkout
       - node/install-packages
       - run:
